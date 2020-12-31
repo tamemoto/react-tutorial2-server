@@ -1,4 +1,34 @@
-export const users = [
+
+type User = {
+  id: number,
+  sub: string,
+  nickname: string,
+  createdAt: string,
+  updatedAt: string
+}
+
+type Review = {
+  id: number,
+  restaurantId: number,
+  title: string,
+  comment: string,
+  userId: number,
+  user: User,
+  createdAt: string,
+  updatedAt: string
+}
+
+export type Restaurant = {
+  id: number,
+  name: string,
+  image: string | null,
+  map: string,
+  reviews: Review[]
+  createdAt: string,
+  updatedAt: string
+}
+
+export const users: User[] = [
   {
     id: 1,
     sub: "testuser1",
@@ -22,7 +52,7 @@ export const users = [
   },
 ];
 
-export const reviews = [
+export const reviews: Review[] = [
   {
     id: 1,
     restaurantId: 1,
@@ -75,7 +105,7 @@ export const reviews = [
   },
 ];
 
-export const restaurants = [
+export const restaurants: Restaurant[] = [
   {
     id: 1,
     name: "ラーメン英 下高井戸店",
@@ -129,7 +159,6 @@ export const restaurants = [
   {
     id: 6,
     name: "麺匠 ようすけ 鶏煮亭 下高井戸店",
-    name: "もちぶたラーメン 利田商店",
     image: null,
     map:
       '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d609.7099608469251!2d139.64091026651553!3d35.6661515503589!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x46b24612d4ed3307!2z44KC44Gh44G244Gf44Op44O844Oh44OzIOWIqeeUsOWVhuW6lw!5e0!3m2!1sja!2sjp!4v1607820466954!5m2!1sja!2sjp" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>',
