@@ -8,8 +8,8 @@
   },
   "type": "module",
   "scripts": {
-    "start": "npm run build && node ./dist/index.js",
-    "migrate": "npm run build && node ./dist/model/migration.js",
+    "start": "ts-node ./src/index.ts",
+    "migrate": "ts-node ./src/model/migration.ts",
     "build": "tsc"
   },
   "keywords": [],
