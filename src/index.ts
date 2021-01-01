@@ -1,5 +1,6 @@
 import express from "express";
-import { restaurants, reviews } from "./usecase/sample-data";
+import { Restaurant, Review, User } from "./model/model";
+import { Sequelize } from "sequelize";
 import cors from "cors"
 
 
@@ -9,17 +10,31 @@ app.use(cors())
 app.get("/restaurants", async (req, res) => {
     const limit = Number(req.query.limit) || 5;
     const offset = Number(req.query.offset) || 0;
-    const datas = restaurants;
-    res.json({
-        rows: datas.slice(offset, offset + limit),
-        count: datas.length,
-    });
+
+    const restaurants = await Restaurant.findAndCountAll({
+        attributes: {
+            include: [
+                [
+                    Sequelize.literal(
+                        `(SELECT COUNT(*) FROM reviews AS r WHERE r.restaurant_id = restaurant.id)`,
+                    ),
+                    "review_count"
+                ],
+            ],
+        },
+        include: [{model: Review, limit: 3,include: [{ model: User}]},],
+        order: [[Sequelize.literal("review_count"), "DESC"]],
+        limit,
+        offset
+    })
+    console.log(restaurants)
+    res.json(restaurants)
 });
 
 
 app.get("/restaurants/:restaurantId", async (request, response): Promise<any> => {
     const restaurantId = request.params.restaurantId
-    const restaurant = restaurants.find((restaurant) => restaurant.id.toString()===restaurantId)
+    const restaurant = await Restaurant.findByPk(restaurantId)
     if(!restaurant) {
         response.status(404).send("Not Found")
         return
@@ -29,19 +44,22 @@ app.get("/restaurants/:restaurantId", async (request, response): Promise<any> =>
 
 app.get("/restaurants/:restaurantId/reviews", async (request, response): Promise<any> => {
     const restaurantId = request.params.restaurantId
-    const restaurant = restaurants.find(restaurant => restaurant.id.toString() === restaurantId)
-
+    const limit = Number(request.query.limit) || 5
+    const offset = Number(request.query.offset) || 0
+    const restaurant = await Restaurant.findByPk(restaurantId)
     if(!restaurant) {
         response.status(404).send("Not Found")
         return
     }
 
-    const review = reviews.filter(review => review.restaurantId.toString() === restaurantId)
-
-    response.json({
-        count: review.length,
-        rows: reviews.slice(0, 5)
+    const review = await Review.findAndCountAll({
+        include: [{ model: User }],
+        where: { restaurantId },
+        limit,
+        offset
     })
+
+    response.json(review)
 })
 
 
