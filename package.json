@@ -11,7 +11,6 @@
     "start": "npm run build && node ./dist/index.js",
     "migrate": "npm run build && node ./dist/model/migration.js",
     "build": "tsc",
-    "preinstall": "typesync"
   },
   "keywords": [],
   "author": "",
