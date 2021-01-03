@@ -16,7 +16,7 @@ export const checkJwt = jwt({
 
 export const getUser = async (token: string) => {
     const authRequest = await fetch(
-        "https://dev-06n9zunr.jp.auth0.com/",
+        "https://dev-06n9zunr.jp.auth0.com/userinfo",
         {
             headers: {
                 Authorization: token

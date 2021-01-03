@@ -29,7 +29,6 @@ app.get("/restaurants", async (req, res) => {
         limit,
         offset
     })
-    console.log(restaurants)
     res.json(restaurants)
 });
 
@@ -73,6 +72,9 @@ app.post("/restaurants/:restaurantId/reviews", checkJwt, async (req: any, res: a
         }
     })
 
+    console.log(user)
+    console.log(created)
+
     if(!created){
         user.nickname = authUser.nickname
         await user.save()
@@ -87,9 +89,11 @@ app.post("/restaurants/:restaurantId/reviews", checkJwt, async (req: any, res: a
     const record = {
         title: req.body.title,
         comment: req.body.comment,
-        userId: req.bosy.userId,
+        userId: user.id,
         restaurantId
     }
+
+    console.log(record)
 
     if(!record.title || !record.comment) {
         res.status(400).send("bad request")
