@@ -14,7 +14,8 @@ export const checkJwt = jwt({
     algorithms: ["RS256"]
 })
 
-export const getUser = async (token: string) => {
+export const getUser = async (token: string | undefined) => {
+    if (!token) return
     const authRequest = await fetch(
         "https://dev-06n9zunr.jp.auth0.com/userinfo",
         {

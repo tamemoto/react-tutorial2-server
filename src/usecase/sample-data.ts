@@ -1,34 +1,6 @@
+import { UserType, ReviewType, RestaurantType } from "../@types/types";
 
-type User = {
-  id: number,
-  sub: string,
-  nickname: string,
-  createdAt: string,
-  updatedAt: string
-}
-
-type Review = {
-  id: number,
-  restaurantId: number,
-  title: string,
-  comment: string,
-  userId: number,
-  user: User,
-  createdAt: string,
-  updatedAt: string
-}
-
-export type Restaurant = {
-  id: number,
-  name: string,
-  image: string | null,
-  map: string,
-  reviews: Review[]
-  createdAt: string,
-  updatedAt: string
-}
-
-export const users: User[] = [
+export const users: UserType[] = [
   {
     id: 1,
     sub: "testuser1",
@@ -52,7 +24,7 @@ export const users: User[] = [
   },
 ];
 
-export const reviews: Review[] = [
+export const reviews: ReviewType[] = [
   {
     id: 1,
     restaurantId: 1,
@@ -105,7 +77,7 @@ export const reviews: Review[] = [
   },
 ];
 
-export const restaurants: Restaurant[] = [
+export const restaurants: RestaurantType[] = [
   {
     id: 1,
     name: "ラーメン英 下高井戸店",

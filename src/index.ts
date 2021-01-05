@@ -4,12 +4,11 @@ import { Sequelize } from "sequelize";
 import { checkJwt, getUser } from "./service/auth";
 import cors from "cors"
 
-
-const app = express()
+const app: express.Express = express()
 app.use(cors())
 app.use(express.json())
 
-app.get("/restaurants", async (req, res) => {
+app.get("/restaurants", async (req: express.Request, res: express.Response): Promise<any> => {
     const limit = Number(req.query.limit) || 5;
     const offset = Number(req.query.offset) || 0;
 
@@ -33,23 +32,23 @@ app.get("/restaurants", async (req, res) => {
 });
 
 
-app.get("/restaurants/:restaurantId", async (request, response): Promise<any> => {
-    const restaurantId = request.params.restaurantId
+app.get("/restaurants/:restaurantId", async (req: express.Request, res: express.Response): Promise<any> => {
+    const restaurantId = req.params.restaurantId
     const restaurant = await Restaurant.findByPk(restaurantId)
     if(!restaurant) {
-        response.status(404).send("Not Found")
+        res.status(404).send("Not Found")
         return
     }
-    response.json(restaurant)
+    res.json(restaurant)
 })
 
-app.get("/restaurants/:restaurantId/reviews", async (request, response): Promise<any> => {
-    const restaurantId = request.params.restaurantId
-    const limit = Number(request.query.limit) || 5
-    const offset = Number(request.query.offset) || 0
+app.get("/restaurants/:restaurantId/reviews", async (req: express.Request, res: express.Response) => {
+    const restaurantId = req.params.restaurantId
+    const limit = Number(req.query.limit) || 5
+    const offset = Number(req.query.offset) || 0
     const restaurant = await Restaurant.findByPk(restaurantId)
     if(!restaurant) {
-        response.status(404).send("Not Found")
+        res.status(404).send("Not Found")
         return
     }
 
@@ -60,10 +59,10 @@ app.get("/restaurants/:restaurantId/reviews", async (request, response): Promise
         offset
     })
 
-    response.json(review)
+    res.json(review)
 })
 
-app.post("/restaurants/:restaurantId/reviews", checkJwt, async (req: any, res: any) => {
+app.post("/restaurants/:restaurantId/reviews", checkJwt, async (req: express.Request, res: express.Response) => {
     const authUser = await getUser(req.get("Authorization"))
     const [user, created]: any = await User.findOrCreate({
         where: { sub: authUser.sub },
