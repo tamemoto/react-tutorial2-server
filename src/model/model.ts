@@ -5,7 +5,10 @@ const url = process.env.DATABASE_URL || "postgres://tamemotoyusuke@localhost:543
 export const sequelize = new Sequelize(url, {
     dialect: "postgres",
     dialectOptions: {
-        ssl: true
+        ssl: {
+            required: true,
+            rejectUnauthorized: false
+        }
     }
 })
 
