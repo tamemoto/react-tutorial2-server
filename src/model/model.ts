@@ -2,13 +2,7 @@ import { DataTypes, Sequelize} from "sequelize";
 
 const url = process.env.DATABASE_URL || "postgres://tamemotoyusuke@localhost:5432/reacttutorialdb"
 
-export const sequelize = new Sequelize(url, {
-    dialectOptions: {
-        ssl: {
-            rejectUnauthorized: false
-        }
-    }
-})
+export const sequelize = new Sequelize(url)
 
 export const User = sequelize.define(
     "user",
