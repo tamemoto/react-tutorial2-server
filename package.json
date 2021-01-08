@@ -10,7 +10,8 @@
     "start": "ts-node ./src/index.ts",
     "start:watch": "nodemon",
     "migrate": "ts-node ./src/model/migration.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "postinstall": "npm run build"
   },
   "keywords": [],
   "author": "",
