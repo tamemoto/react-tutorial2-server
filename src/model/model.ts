@@ -1,3 +1,4 @@
+require("pg").defaults.ssl=true
 import { DataTypes, Sequelize} from "sequelize";
 
 const url = process.env.DATABASE_URL || "postgres://tamemotoyusuke@localhost:5432/reacttutorialdb"
