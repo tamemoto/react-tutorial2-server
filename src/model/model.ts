@@ -1,6 +1,6 @@
 import { DataTypes, Sequelize} from "sequelize";
 
-const url = process.env.DATABASE_URL || "postgres://tamemotoyusuke@localhost:5432/reacttutorialdb"
+const url = process.env.DATABASE_URL || "postgres://postgres@localhost:5432/reacttutorialdb"
 
 export const sequelize = new Sequelize(url, {
     dialect: "postgres",
